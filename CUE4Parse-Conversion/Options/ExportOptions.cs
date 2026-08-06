@@ -15,6 +15,7 @@ public class ExportOptions(
     bool exportAllTextureMips = false,
     EMaterialDepth materialDepth = EMaterialDepth.TopLayerOnly,
     bool exportMaterials = true,
+    EMaterialJsonFormat materialJsonFormat = EMaterialJsonFormat.Properties,
     bool exportMorphTargets = true,
     ESocketFormat socketFormat = ESocketFormat.Bone,
     EFileCompressionFormat compressionFormat = EFileCompressionFormat.None)
@@ -31,6 +32,7 @@ public class ExportOptions(
 
     public readonly EMaterialDepth MaterialDepth = materialDepth;
     public readonly bool ExportMaterials = exportMaterials; // not to be confused, when we export a mesh we will look (or not) for its materials and export them (or not)
+    public readonly EMaterialJsonFormat MaterialJsonFormat = materialJsonFormat;
 
     public readonly bool ExportMorphTargets = exportMorphTargets;
     public readonly ESocketFormat SocketFormat = socketFormat;
