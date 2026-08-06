@@ -7,6 +7,7 @@ namespace CUE4Parse_Conversion.Dto;
 public readonly struct MeshMaterialDto(string? slotName, FPackageIndex? material = null)
 {
     public readonly string SlotName = slotName ?? "DefaultSlot";
+    public readonly string? MaterialSlotName = slotName;
     public readonly FPackageIndex? Material = material;
     public string Name => Material is { IsNull: false } ? Material.Name : SlotName;
 

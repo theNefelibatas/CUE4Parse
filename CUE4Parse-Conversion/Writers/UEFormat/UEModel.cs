@@ -183,7 +183,7 @@ public sealed class UEModel : UEFormatExport
         attrs.AddAttribute("MATERIALS", attr => attr.WriteArray(lod.Sections, (writer, section, i) =>
         {
             var material = lod.Owner.GetMaterial(section);
-            writer.WriteFString(material?.Name ?? $"MaterialSlot_{i}");
+            writer.WriteFString(material?.MaterialSlotName ?? material?.Name ?? $"MaterialSlot_{i}");
             writer.WriteFString(material?.Material?.ResolvedObject?.GetPathName() ?? string.Empty);
             writer.Write(faceOffset);
             writer.Write(section.NumFaces);
