@@ -140,6 +140,11 @@ namespace CUE4Parse.UE4.Assets.Exports.Animation
                 {
                     CompressedCurveData = new FRawCurveTracks(codec.ConvertCurves(CompressedCurveNames, CompressedCurveByteStream));
                 }
+                else if (!string.IsNullOrEmpty(CurveCodecPath) && CurveCodecPath.Contains("ACL"))
+                {
+                    // ACL settings are engine-side assets not shipped in the pak; fall back on the path
+                    CompressedCurveData = new FRawCurveTracks(new AnimCurveCompressionCodec_ACL().ConvertCurves(CompressedCurveNames, CompressedCurveByteStream));
+                }
                 else
                 {
                     Log.Warning("Unknown curve compression codec {0}", CurveCodecPath);
@@ -322,6 +327,13 @@ namespace CUE4Parse.UE4.Assets.Exports.Animation
                 CompressedDataStructure.SerializeCompressedData(Ar);
                 CompressedDataStructure.Bind(serializedByteStream);
                 NumFrames = CompressedDataStructure.CompressedNumberOfFrames;
+            }
+            else if (BoneCodecDDCHandle.StartsWith("AnimBoneCompressionCodec_ACL"))
+            {
+                // ACL settings are engine-side assets not shipped in the pak; the compressed stream is self-describing,
+                // so the safe codec can bind it directly (same as the legacy ACL path above)
+                CompressedDataStructure = new UAnimBoneCompressionCodec_ACLSafe().AllocateAnimData();
+                CompressedDataStructure.Bind(serializedByteStream);
             }
             else
             {
